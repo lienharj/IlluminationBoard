@@ -1,0 +1,64 @@
+{
+  "packages": [
+    {
+      "name": "Illuminationboard",
+      "maintainer": "Autonomous Systems Lab, ETHZ",
+      "websiteURL": "http://www.asl.ethz.ch",
+      "email": "versavis@ethz-asl.ch",
+      "help": {
+	     "online": "http://www.asl.ethz.ch"
+	  },
+      "platforms": [
+        {
+          "name": "IlluminationboardV2",
+          "architecture": "samd",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://www.asl.ethz.ch"
+          },
+          "url": "https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/master/IlluminationboardV2.zip",
+          "archiveFileName": "IlluminationboardV2.zip",
+		  "checksum": "SHA-256:0A789E87AA1A99C924A9E6990F8CA9DAF2D05CCDC39F2134B40D1A1A05605DBD",
+          "size": "1202605",
+          "boards": [
+            {"name": "IlluminationboardV2"}
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.7.0-arduino3"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS-Atmel",
+              "version": "1.2.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "arduinoOTA",
+              "version": "1.2.1"
+            }
+          ]
+        }
+      ],
+      "tools":[]
+    }
+  ]
+}
