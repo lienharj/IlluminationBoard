@@ -17,7 +17,7 @@
           "help": {
             "online": "http://www.asl.ethz.ch"
           },
-          "url": "https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/IlluminationboardV2.zip",
+          "url": "https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/master/IlluminationboardV2.zip",
           "archiveFileName": "IlluminationboardV2.zip",
 		  "checksum": "SHA-256:0A789E87AA1A99C924A9E6990F8CA9DAF2D05CCDC39F2134B40D1A1A05605DBD",
           "size": "1202605",
