@@ -19,8 +19,8 @@
           },
           "url": "https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/master/IlluminationboardV2.zip",
           "archiveFileName": "IlluminationboardV2.zip",
-		  "checksum": "SHA-256:85E625F0113FF410AFBCC57CDDC053A2743C6A55983534E294746C158B7EDD3A",
-          "size": "1199842",
+		  "checksum": "SHA-256:485619959FAE9A22574F3AD26DACF15A6E452035FF1F716615DF86B02281C2EF",
+          "size": "1199845",
           "boards": [
             {"name": "IlluminationboardV2"}
           ],
