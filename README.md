@@ -13,5 +13,8 @@ Include https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/master/pack
 
 After doing this you can search it in the Board Manager and install it from there.
 
+Use the firmware from the "old" folder.
+
 ### V2 REV 2 & 2.1
 As of revision 2 the MCU pinout has been changed. It is no longer required to install the above package, as it now works with the standard Arduino MKRZERO package.
+Use the firmware from the "_latest" folder.
