@@ -1,6 +1,17 @@
 # IlluminationBoard
+## Description
 Strong triggerable LED Driver with ROS (or other environment) capability 
 
+## Versions
+ - IlluminationBoard V2 Rev. 1
+ - IlluminationBoard V2 Rev. 2 & 2.1
+
+## Firmware
+### ONLY FOR V2 REV 1
+This version has its own Arduino package, as well as firmware.
 Include https://raw.githubusercontent.com/ethz-asl/IlluminationBoard/master/package_Illuminationboard_index.json in the Arduino IDE under "File>Preferences>Settings" in the "Additional Boards Manager URLs" section.
 
 After doing this you can search it in the Board Manager and install it from there.
+
+### V2 REV 2 & 2.1
+As of revision 2 the MCU pinout has been changed. It is no longer required to install the above package, as it now works with the standard Arduino MKRZERO package.
