@@ -24,6 +24,7 @@
 #define FILTER      100
 #define FAN_CTRL    16
 #define ADC_CONV    6
+#define BTN_TST     11
 
 #define PWM_PER 255
 
@@ -40,6 +41,7 @@ void setup() {  // setup begin
   pinMode(PWM_OUT, OUTPUT);
   pinMode(EXT_SIG_EN, OUTPUT);
   pinMode(LED_SWITCH, INPUT);
+  pinMode(BTN_TST, INPUT);
   pinMode(FAN_CTRL, OUTPUT);
   pinMode(ADC_CONV, OUTPUT);
 
@@ -78,7 +80,6 @@ int mv_avg = 0;
 
 #if(BRD_VERSION == 21)
 bool switch_new = digitalRead(LED_SWITCH);
-bool switch_old = false;
 #endif
 
 void loop() {
@@ -112,20 +113,23 @@ void loop() {
 
 #if(BRD_VERSION == 21)
   switch_new = digitalRead(LED_SWITCH);
-  if (switch_new != switch_old)
+
+  digitalWrite(INT_TRIG, switch_new);
+  digitalWrite(EXT_SIG_EN, switch_new);
+
+  if(!switch_new)
   {
-    digitalWrite(INT_TRIG, switch_new);
-    
-    if(!switch_new) // enables external signal when internal trigger is disabled
+    if(digitalRead(BTN_TST))
     {
-      digitalWrite(EXT_SIG_EN, LOW);
+      digitalWrite(INT_TRIG, HIGH);
+      digitalWrite(EXT_SIG_EN, HIGH);
     }
     else
     {
-      digitalWrite(EXT_SIG_EN, HIGH);
+      digitalWrite(INT_TRIG, LOW);
+      digitalWrite(EXT_SIG_EN, LOW);
     }
   }
-  switch_old = switch_new;
 #endif
 }
 
