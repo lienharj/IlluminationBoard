@@ -4,7 +4,7 @@ Strong triggerable LED Driver with ROS (or other environment) capability
 
 ## Versions
  - IlluminationBoard V2 Rev. 1
- - IlluminationBoard V2 Rev. 2 & 2.1
+ - IlluminationBoard V2 Rev. 2 & 3
 
 ## Firmware
 ### ONLY FOR V2 REV 1
@@ -15,7 +15,7 @@ After doing this you can search it in the Board Manager and install it from ther
 
 Use the firmware from the "old" folder.
 
-### V2 REV 2 & 2.1
+### V2 REV 2 & 3
 As of revision 2 the MCU pinout has been changed. It is no longer required to install the above package, as it now works with the standard Arduino MKRZERO package.
 
 Use the firmware from the "_latest" folder.
