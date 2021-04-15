@@ -60,9 +60,8 @@ void setup() {  // setup begin
 
   SPI.begin();             // initialize SPI for temperature sensor (ADC)
 
-  Serial1.begin(9600);      // hardware serial
-  Serial.begin(9600);       // USB serial
-
+  Serial1.begin(250000);      // hardware serial
+  SerialUSB.begin(250000);       // USB serial
   digitalWrite(PWR_EN, 1);  // enables power on the LEDPCB
 
 } // setup end
@@ -77,6 +76,11 @@ void ISR_Switch() {
 static int avg[FILTER];
 static int i = 0;
 int mv_avg = 0;
+
+int message = 121;
+const byte numChars = 32;
+char receivedChars[numChars];   // an array to store the received data
+int pwm_value = 0;
 
 #if(BRD_VERSION == 21)
 bool switch_new = digitalRead(LED_SWITCH);
@@ -101,12 +105,17 @@ void loop() {
     mv_avg = 255;
 
 
-  Serial.println(mv_avg);
+//  SerialUSB.println(mv_avg);
+//  if ( Serial1.available()){
+//    message = Serial1.read();
+//    SerialUSB.println(message);
+//  }
+  recvPWM();
 
   analogWrite(FAN_CTRL, mv_avg);
 
   // write ADC average into ccb0 register of tcc0 to set dutycycle of PWM
-  REG_TCC0_CCB0 = mv_avg;
+  REG_TCC0_CCB0 = pwm_value;                                                           ///JLIE: changed this line
   while (TCC0->SYNCBUSY.bit.CCB0);
 
   SPI.transfer(0b10101010); // spi dummy write for testing purposes
@@ -196,4 +205,39 @@ void init_pwm()
 
   REG_TCC0_CCB0 = 0;    //set dutycycle to 0 at start (LED off)
   while (TCC0->SYNCBUSY.bit.CCB0);
+}
+
+
+void recvPWM() {
+  static byte ndx = 0;
+  char endMarker = '\n';
+  char rc;
+  
+  if (Serial1.available() > 0) {
+    rc = Serial1.read();
+
+    if (rc != endMarker) {
+      receivedChars[ndx] = rc;
+      ndx++;
+      if (ndx >= numChars) {
+        ndx = numChars - 1;
+      }
+    }
+    else {
+      receivedChars[ndx] = '\0'; // terminate the string
+      ndx = 0;
+      pwm_value = atoi(receivedChars);
+
+      SerialUSB.print("sent=");   
+      SerialUSB.println(receivedChars);
+      SerialUSB.print("pwm_value=");    
+      SerialUSB.println(pwm_value); 
+      
+      if (pwm_value > 255)
+        pwm_value = 255;
+     
+      }
+     
+    
+  }
 }
