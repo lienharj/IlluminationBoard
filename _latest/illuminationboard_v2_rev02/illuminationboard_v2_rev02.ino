@@ -77,9 +77,7 @@ static int avg[FILTER];
 static int i = 0;
 int mv_avg = 0;
 
-int message = 121;
-const byte numChars = 32;
-char receivedChars[numChars];   // an array to store the received data
+String pwm_message = "0";
 int pwm_value = 0;
 
 #if(BRD_VERSION == 21)
@@ -103,14 +101,15 @@ void loop() {
 
   if (mv_avg > 255)
     mv_avg = 255;
-
-
-//  SerialUSB.println(mv_avg);
-//  if ( Serial1.available()){
-//    message = Serial1.read();
-//    SerialUSB.println(message);
-//  }
-  recvPWM();
+    
+  if (Serial1.available()){                                                         //JLIE: Added this block to get pwm_value from Serial1
+    pwm_message = Serial1.readStringUntil('\n');
+    pwm_value = pwm_message.toInt();
+    if (pwm_value > 255)
+      pwm_value = 255;
+    SerialUSB.print("pwm_value=");    
+    SerialUSB.println(pwm_value);
+  }
 
   analogWrite(FAN_CTRL, mv_avg);
 
@@ -118,7 +117,7 @@ void loop() {
   REG_TCC0_CCB0 = pwm_value;                                                           ///JLIE: changed this line
   while (TCC0->SYNCBUSY.bit.CCB0);
 
-  SPI.transfer(0b10101010); // spi dummy write for testing purposes
+   SPI.transfer(0b10101010); // spi dummy write for testing purposes
 
 #if(BRD_VERSION == 21)
   switch_new = digitalRead(LED_SWITCH);
@@ -205,39 +204,4 @@ void init_pwm()
 
   REG_TCC0_CCB0 = 0;    //set dutycycle to 0 at start (LED off)
   while (TCC0->SYNCBUSY.bit.CCB0);
-}
-
-
-void recvPWM() {
-  static byte ndx = 0;
-  char endMarker = '\n';
-  char rc;
-  
-  if (Serial1.available() > 0) {
-    rc = Serial1.read();
-
-    if (rc != endMarker) {
-      receivedChars[ndx] = rc;
-      ndx++;
-      if (ndx >= numChars) {
-        ndx = numChars - 1;
-      }
-    }
-    else {
-      receivedChars[ndx] = '\0'; // terminate the string
-      ndx = 0;
-      pwm_value = atoi(receivedChars);
-
-      SerialUSB.print("sent=");   
-      SerialUSB.println(receivedChars);
-      SerialUSB.print("pwm_value=");    
-      SerialUSB.println(pwm_value); 
-      
-      if (pwm_value > 255)
-        pwm_value = 255;
-     
-      }
-     
-    
-  }
 }
