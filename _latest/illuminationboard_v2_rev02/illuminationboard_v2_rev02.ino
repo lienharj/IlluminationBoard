@@ -78,7 +78,7 @@ static int i = 0;
 int mv_avg = 0;
 
 String pwm_message = "0";
-int pwm_value = 0;
+int pwm_value = 5;
 
 #if(BRD_VERSION == 21)
 bool switch_new = digitalRead(LED_SWITCH);
